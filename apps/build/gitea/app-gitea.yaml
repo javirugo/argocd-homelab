@@ -21,8 +21,8 @@ spec:
         gitea:
           config:
             server:
-              SSH_PORT: 2222
-              SSH_LISTEN_PORT: 2222
+              SSH_PORT: 30022
+              SSH_LISTEN_PORT: 30022
             service:
               DISABLE_REGISTRATION: true
           admin:
