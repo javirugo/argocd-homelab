@@ -5,7 +5,7 @@ metadata:
   name: 0-apps-data
   namespace: argocd
 spec:
-  project: argocd
+  project: data
   source:
     repoURL: https://github.com/javirugo/argocd-homelab.git
     targetRevision: main
