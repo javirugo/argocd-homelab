@@ -6,6 +6,7 @@ I use this simple repository to populate my Homelab kubernetes cluster with all 
 
 - Working Kubernetes cluster.
 - ArgoCD installed in the "argocd" directory.
+- Nginx Ingress Controller installed in the cluter.
 
 ## Instructions
 

@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mysql-homelab-sa
+  namespace: data
+
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: mysql-homelab
+  namespace: data
+spec:
+  refreshInterval: "300s"
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    name: mysql-homelab-secret
+    creationPolicy: Owner
+  data:
+    - secretKey: rootUser
+      remoteRef:
+        key: homelab/data/mysql-homelab
+        property: rootUser
+    - secretKey: rootHost
+      remoteRef:
+        key: homelab/data/mysql-homelab
+        property: rootHost
+    - secretKey: rootPassword
+      remoteRef:
+        key: homelab/data/mysql-homelab
+        property: rootPassword
+
+---
+apiVersion: mysql.oracle.com/v2
+kind: InnoDBCluster
+metadata:
+  name: mycluster
+  namespace: default
+spec:
+  instances: 3
+  router:
+    instances: 1
+  secretName: mysql-homelab-secret
+  baseServerId: 1000
+  version: 9.4.0
+  serviceAccountName: mysql-homelab-sa

@@ -1,0 +1,64 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitea
+  namespace: argocd
+spec:
+  project: build
+  source:
+    chart: gitea
+    repoURL: https://dl.gitea.com/charts/
+    targetRevision: 12.3.0
+    helm:
+      releaseName: gitea
+      values: |
+        service:
+          ssh:
+            type: NodePort
+            nodePort: 30022
+            serviceType: NodePort
+
+        gitea:
+          config:
+            server:
+              SSH_PORT: 2222
+              SSH_LISTEN_PORT: 2222
+            service:
+              DISABLE_REGISTRATION: true
+          admin:
+            email: "gitea@lab.home"
+          additionalConfigSources:
+            - secret:
+                secretName: gitea-db-config
+          additionalConfigFromEnvs:
+            - name: GITEA__webhook__ALLOWED_HOST_LIST
+              value: "10.0.0.0/8,192.168.100.0/24"
+            - name: GITEA__server__LFS_START_SERVER
+              value: "true"
+            - name: GITEA__server__LFS_ALLOW_PURE_SSH
+              value: "false"
+            - name: GITEA__server__ROOT_URL
+              value: "https://git.galluman.com"
+
+        ingress:
+          enabled: true
+          className: nginx
+          annotations:
+            kubernetes.io/ingress.class: nginx
+            nginx.ingress.kubernetes.io/proxy-body-size: 10g
+          hosts:
+            - host: git.galluman.com
+              paths:
+                - path: /
+                  pathType: Prefix
+
+        postgresql:
+          enabled: false
+
+        postgresql-ha:
+          enabled: false
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: build
+  syncPolicy:
+    automated: {}
