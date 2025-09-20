@@ -1,0 +1,19 @@
+# Application of all applications
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 0-apps-data
+  namespace: argocd
+spec:
+  project: argocd
+  source:
+    repoURL: https://github.com/javirugo/argocd-homelab.git
+    targetRevision: main
+    path: apps/data
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated: {}

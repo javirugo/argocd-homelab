@@ -1,0 +1,78 @@
+# Secret to add this repository
+apiVersion: v1
+kind: Secret
+metadata:
+  name: GitHub
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: git
+  url: https://github.com/javirugo/argocd-homelab.git
+
+
+---
+# Main project "argocd"
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: argocd
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: ArgoCD Project
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: argocd
+    server: https://kubernetes.default.svc
+  roles:
+  - name: argocd-role
+    description: Sync privileges on argocd apps
+    policies:
+    - p, proj:argocd:argocd-role, applications, sync, argocd/*, allow
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+
+
+---
+# ArgoCD projects
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 0-apps-argocd
+  namespace: argocd
+spec:
+  project: argocd
+  source:
+    repoURL: https://github.com/javirugo/argocd-homelab.git
+    targetRevision: main
+    path: projects
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated: {}
+
+
+---
+# Application of all applications
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 0-apps-all
+  namespace: argocd
+spec:
+  project: argocd
+  source:
+    repoURL: https://github.com/javirugo/argocd-homelab.git
+    targetRevision: main
+    path: apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated: {}
+
