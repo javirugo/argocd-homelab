@@ -16,30 +16,20 @@ spec:
           enabled: true
           serviceType: "ClusterIP"
         server:
-          ha:
-            enabled: false
-            replicas: 1
-            config: |
-              ui = true
-              service_registration "kubernetes" {}
-              listener "tcp" {
-                tls_disable = 1
-                address = "[::]:8200"
-              }
-              storage "consul" {
-                path = "vault"
-                address = "consul-consul-server:8500"
-              }
+          enabled: true
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 250m
+            limits:
+              memory: 512Mi
+              cpu: 500m
           ingress:
             enabled: true
             ingressClassName: nginx
             hosts:
             - host: vault.galluman.com
               paths: ["/"]
-        injector:
-          nodeSelector:
-            nodetype: data
-
   destination:
     server: "https://kubernetes.default.svc"
     namespace: data
