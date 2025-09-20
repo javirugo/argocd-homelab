@@ -10,6 +10,8 @@ spec:
   sourceRepos:
   - '*'
   destinations:
+  - namespace: argocd
+    server: https://kubernetes.default.svc
   - namespace: build
     server: https://kubernetes.default.svc
   roles:
