@@ -12,6 +12,10 @@ spec:
   destinations:
   - namespace: argocd
     server: https://kubernetes.default.svc
+  - namespace: build
+    server: https://kubernetes.default.svc
+  - namespace: data
+    server: https://kubernetes.default.svc
   roles:
   - name: argocd-role
     description: Sync privileges on argocd apps
