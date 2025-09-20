@@ -7,7 +7,7 @@ spec:
   project: data
   source:
     chart: mysql-operator
-    repoURL: hhttps://mysql.github.io/mysql-operator
+    repoURL: https://mysql.github.io/mysql-operator
     targetRevision: 2.2.5
   destination:
     server: "https://kubernetes.default.svc"
