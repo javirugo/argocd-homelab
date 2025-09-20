@@ -37,7 +37,7 @@ apiVersion: mysql.oracle.com/v2
 kind: InnoDBCluster
 metadata:
   name: homelab
-  namespace: default
+  namespace: data
 spec:
   instances: 3
   router:
