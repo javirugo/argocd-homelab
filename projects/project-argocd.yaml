@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: argocd
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: ArgoCD Apps
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: argocd
+    server: https://kubernetes.default.svc
+  roles:
+  - name: argocd-role
+    description: Sync privileges on argocd apps
+    policies:
+    - p, proj:argocd:argocd-role, applications, sync, argocd/*, allow
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
