@@ -18,6 +18,8 @@ spec:
         extraConfig:
           secrets:
             - sonarqube-db-config
+        postgresql:
+          enabled: false
         persistence:
           enabled: true
           size: 100Gi
