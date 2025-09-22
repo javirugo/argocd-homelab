@@ -37,6 +37,7 @@ spec:
           enabled: true
           host: nexus.galluman.com
           hostPath: /
+          defaultRule: true
           incressClassName: nginx
           annotations:
             cert-manager.io/cluster-issuer: lets-encrypt
