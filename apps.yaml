@@ -42,6 +42,26 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  name: 0-apps-k8s
+  namespace: argocd
+spec:
+  project: argocd
+  source:
+    repoURL: https://github.com/javirugo/argocd-homelab.git
+    targetRevision: main
+    path: k8s-objects
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated: {}
+
+
+---
+# ArgoCD projects
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
   name: 0-apps-argocd
   namespace: argocd
 spec:
