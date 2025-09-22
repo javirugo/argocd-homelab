@@ -52,7 +52,10 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
-
+          tls:
+          - hosts:
+            - git.galluman.com
+            secretName: gitea-ingress-tls
         postgresql:
           enabled: false
 
