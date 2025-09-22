@@ -17,17 +17,16 @@ spec:
             enabled: false
             name: build
 
-        container:
-          env:
-            install4jAddVmParams: "-Xms2703m -Xmx2703m -Dnexus.loadAsOSS=true"
-          additionalEnv:
-            - name: LICENSE_FILE
-              value: "null"
-
         statefulset:
           replicaCount: 1
           clustered: false
           container:
+            env:
+              install4jAddVmParams: "-Xms2703m -Xmx2703m -Dnexus.loadAsOSS=true"
+            additionalEnv:
+              - name: LICENSE_FILE
+                value: "null"
+
             resources:
               requests:
                 cpu: 4
