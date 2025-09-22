@@ -17,6 +17,10 @@ spec:
             enabled: false
             name: build
 
+        secret:
+          dbSecret:
+            enabled: false
+
         statefulset:
           replicaCount: 1
           clustered: false
