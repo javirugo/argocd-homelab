@@ -59,8 +59,10 @@ spec:
             registries:
             - host: docker.galluman.com
               port: 5000
+              secretName: nexus-ingress-tls
             - host: dockerproxy.galluman.com
               port: 5001
+              secretName: nexus-ingress-tls
   destination:
     server: "https://kubernetes.default.svc"
     namespace: build
