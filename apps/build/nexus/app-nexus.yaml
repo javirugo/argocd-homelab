@@ -30,6 +30,7 @@ spec:
 
         ingress:
           enabled: true
+          defaultRule: true
           hosts: nexus.galluman.com
           hostPath: /
           incressClassName: nginx
