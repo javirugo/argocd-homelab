@@ -8,7 +8,7 @@ spec:
   source:
     chart: nxrm-ha
     repoURL: https://sonatype.github.io/helm3-charts/
-    targetRevision: 61.0.3
+    targetRevision: 84.1.0
     helm:
       releaseName: nxrm-ha
       values: |
