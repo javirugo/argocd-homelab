@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sonarqube
+  namespace: argocd
+spec:
+  project: build
+  source:
+    chart: sonarqube
+    repoURL: https://sonarSource.github.io/helm-chart-sonarqube
+    targetRevision: 2025.4.2
+    helm:
+      releaseName: sonarqube
+      values: |
+        community:
+          enabled: true
+        monitoringPasscode: homelab
+        extraConfig:
+          secrets:
+            - sonarqube-db-config
+        persistence:
+          enabled: true
+          size: 100Gi
+        ingress:
+          enabled: true
+          ingressClassName: nginx
+          annotations:
+            kubernetes.io/ingress.class: nginx
+            nginx.ingress.kubernetes.io/proxy-body-size: 10g
+            cert-manager.io/cluster-issuer: lets-encrypt
+          hosts:
+          - host: sonarqube.galluman.com
+            paths: ["/"]
+          tls:
+          - hosts:
+            - sonarqube.galluman.com
+            secretName: sonarqube-ingress-tls
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: build
+  syncPolicy:
+    automated: {}
