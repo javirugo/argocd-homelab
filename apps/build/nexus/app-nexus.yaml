@@ -22,11 +22,10 @@ spec:
           clustered: false
           container:
             env:
-              install4jAddVmParams: "-Xms2703m -Xmx2703m -Dnexus.loadAsOSS=true"
+              install4jAddVmParams: "-Xms2703m -Xmx2703m -Dnexus.loadAsOSS=true -Dnexus.licenseFile=null"
             additionalEnv:
               - name: LICENSE_FILE
                 value: "null"
-
             resources:
               requests:
                 cpu: 4
