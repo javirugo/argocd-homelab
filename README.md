@@ -49,3 +49,5 @@ See the Requirements section...
 I use microk8s in my homelab server that makes it so easy to have a basic k8s cluster with "addons" for argocd, cert-manager and nginx-ingress-controller. If you are using a different setup (kubedm created cluster, cloud managed or whatever) you will need to take care of the Requisites described above and probably change a few things in this repository.
 
 All ingresses are currently using my domain: galluman.com. Please change them to use your own domain.
+
+Nexus has deprecated the nexus-repository-manager chats. They only support now the nxrm-ha deployment via helm which is intended for pro licensed nexus only. The helm chart deployed here includes a workaround to deploy nexus oss/ce using this chart, but it will only work on a fresh deployment, not in updates. See this issue thread and specifically this comment: https://github.com/sonatype/nxrm3-ha-repository/issues/125#issuecomment-2734648441.
