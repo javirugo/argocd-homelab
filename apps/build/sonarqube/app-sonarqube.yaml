@@ -15,9 +15,12 @@ spec:
         community:
           enabled: true
         monitoringPasscode: homelab
-        extraConfig:
-          secrets:
-            - sonarqube-db-config
+        jdbcOverwrite:
+          enabled: true
+          jdbcUrl: 'jdbc:postgresql://<my_DB_endpoint>.us-east-1.rds.amazonaws.com/sonar_sandbox?socketTimeout=1500'
+          jdbcUsername: "sonarqube"
+          jdbcSecretName: sonarqube-db-config
+          jdbcSecretPasswordKey: SONARQUBE_JDBC_PASSWORD
         postgresql:
           enabled: false
         persistence:
