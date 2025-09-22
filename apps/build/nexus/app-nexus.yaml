@@ -17,10 +17,6 @@ spec:
             enabled: false
             name: build
 
-        secret:
-          dbSecret:
-            enabled: false
-
         statefulset:
           replicaCount: 1
           clustered: false
@@ -32,27 +28,6 @@ spec:
               limits:
                 cpu: 8
                 memory: 16Gi
-            additionalEnv:
-            - name: DB_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: nexus-db-config
-                  key: dbName
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: nexus-db-config
-                  key: dbHost
-            - name: DB_USER
-              valueFrom:
-                secretKeyRef:
-                  name: nexus-db-config
-                  key: dbUsername
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: nexus-db-config
-                  key: dbPassword
 
         ingress:
           enabled: true
