@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cloudnativepg-operator
+  namespace: argocd
+spec:
+  project: data
+  source:
+    chart: cloudnative-pg
+    repoURL: https://cloudnative-pg.github.io/charts
+    targetRevision: 0.26.0
+    helm:
+      releaseName: cloudnativepg-operator
+      parameters:
+        - name: config.clusterWide
+          value: "false"
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: data
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+    - PrunePropagationPolicy=foreground
+    - Replace=true

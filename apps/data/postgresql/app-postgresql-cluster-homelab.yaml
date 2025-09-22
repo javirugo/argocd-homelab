@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgresql-cluster-homelab
+  namespace: argocd
+spec:
+  project: data
+  source:
+    chart: cluster
+    repoURL: https://cloudnative-pg.github.io/charts
+    targetRevision: 0.3.1
+    helm:
+      releaseName: postgresql-cluster-homelab
+      values: |
+        type: postgresql
+        mode: standalone
+        version:
+          postgresql: "16"
+        cluster:
+          instances: 1
+        backups:
+          enabled: false
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: data
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+    - PrunePropagationPolicy=foreground
+    - Replace=true
