@@ -55,7 +55,7 @@ spec:
           tls:
           - hosts:
             - git.galluman.com
-            secretName: gitea-ingress-tls
+            secretName: gitea-ingress-tls-2tdrw
         postgresql:
           enabled: false
 
