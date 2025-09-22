@@ -14,6 +14,7 @@ spec:
       values: |
         namespaces:
           nexusNs:
+            enabled: false
             name: build
 
         statefulset:
