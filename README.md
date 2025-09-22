@@ -7,7 +7,10 @@ It deploys:
 - Base k8s objects (such as namespaces, an ingress for argocd, some secrets, a cert-manager clusterissuer, etc.)
 - Gitea
 - Hasicorp's Vault (single instance, no dev-mode, persistant file storage...)
+- Nexus CE
+- Sonarqube Community
 - MySQL Operator and an InnoDB cluster for the Homelab tools (for gitea for example).
+- CloudNativePG Operator and PostgreSQL single instance database for Homelab tools (for nexus and sonarqube for example).
 
 ## Requirements
 
