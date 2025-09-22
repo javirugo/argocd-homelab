@@ -21,9 +21,10 @@ spec:
           replicaCount: 1
           clustered: false
           container:
+            # workaround to use Nexus CE (see https://github.com/sonatype/nxrm3-ha-repository/issues/125)
             additionalEnv:
               - name: INSTALL4J_ADD_VM_PARAMS
-                value: "-Xms2703m -Xmx2703m -Dnexus.loadAsOSS=true -Dnexus.licenseFile=null -Dnexus.datastore.enabled=true -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs -Dnexus.datastore.nexus.jdbcUrl=jdbc:postgresql://${DB_HOST}:5432/${DB_NAME} -Dnexus.datastore.nexus.username=${DB_USER} -Dnexus.datastore.nexus.password=${DB_PASSWORD}"
+                value: "-Xms2703m -Xmx2703m -Dnexus.loadAsOSS=true -Dnexus.datastore.enabled=true -Djava.util.prefs.userRoot=${NEXUS_DATA}/javaprefs -Dnexus.datastore.nexus.jdbcUrl=jdbc:postgresql://${DB_HOST}:5432/${DB_NAME} -Dnexus.datastore.nexus.username=${DB_USER} -Dnexus.datastore.nexus.password=${DB_PASSWORD}"
             resources:
               requests:
                 cpu: 4
