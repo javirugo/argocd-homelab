@@ -35,18 +35,19 @@ spec:
 
         ingress:
           enabled: true
-          defaultRule: true
+          host: nexus.galluman.com
+          hostPath: /
+          incressClassName: nginx
           annotations:
             cert-manager.io/cluster-issuer: lets-encrypt
             kubernetes.io/ingress.class: nginx
             nginx.ingress.kubernetes.io/proxy-body-size: 10g
-          hosts: nexus.galluman.com
-          hostPath: /
-          incressClassName: nginx
           tls:
             - secretName: nexus-ingress-tls
               hosts:
               - nexus.galluman.com
+              - docker.galluman.com
+              - dockerproxy.galluman.com
 
         pvc:
           storage: 200Gi
@@ -57,7 +58,7 @@ spec:
             registries:
             - host: docker.galluman.com
               port: 5000
-            - host: docker-proxy.galluman.com
+            - host: dockerproxy.galluman.com
               port: 5001
   destination:
     server: "https://kubernetes.default.svc"
