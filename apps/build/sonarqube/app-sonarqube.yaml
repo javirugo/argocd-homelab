@@ -15,9 +15,16 @@ spec:
         community:
           enabled: true
         monitoringPasscode: homelab
+        resources:
+          requests:
+            cpu: 2
+            memory: 6144M
+          limits:
+            cpu: 4
+            memory: 12288M
         jdbcOverwrite:
           enabled: true
-          jdbcUrl: 'jdbc:postgresql://<my_DB_endpoint>.us-east-1.rds.amazonaws.com/sonar_sandbox?socketTimeout=1500'
+          jdbcUrl: "jdbc:postgresql://postgresql-cluster-homelab-rw.data/sonarqube"
           jdbcUsername: "sonarqube"
           jdbcSecretName: sonarqube-db-config
           jdbcSecretPasswordKey: SONARQUBE_JDBC_PASSWORD
