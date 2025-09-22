@@ -6,7 +6,7 @@ It deploys:
 
 - Base k8s objects (such as namespaces, an ingress for argocd, some secrets, a cert-manager clusterissuer, etc.)
 - Gitea
-- Hasicorp's Vault (single instance, no dev-mode)
+- Hasicorp's Vault (single instance, no dev-mode, persistant file storage...)
 - MySQL Operator and a InnoDB cluster
 
 ## Requirements
@@ -17,10 +17,10 @@ It deploys:
 - Cert-Manager installed in the cluster (a clusterissuer will be managed by argocd).
   - cert-manager will use a cloudflare dns01 solver using letsencrypt. I have a free cloudflare account for managing my galluman.com zone, you can change that to whatever you want to use for DNS.
 
-Once everything starts to deploy, it will be required to follow some steps:
+Once everything starts to deploy, some steps arerequired:
 
-1. Init and unseal Vault (and setup authentication, roles, etc.).
-2. Create all secrets Vault (see all externalsecrets in this repo).
+1. Init and unseal Vault (and setup authentication, roles, etc as you prefer).
+2. Create some Vault secrets (see all externalsecrets in this repo).
 3. Create a secret in the build, data and cert-manager namespaces for the vault token:
 
 ```yaml
@@ -41,3 +41,5 @@ Just apply the main apps.yaml in argocd:
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/javirugo/argocd-homelab/refs/heads/main/apps.yaml
 ```
+
+See the Requirements section...
