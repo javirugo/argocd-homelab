@@ -1,0 +1,54 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nxrm-ha
+  namespace: argocd
+spec:
+  project: build
+  source:
+    chart: nxrm-ha
+    repoURL: https://sonatype.github.io/helm3-charts/
+    targetRevision: 61.0.3
+    helm:
+      releaseName: nxrm-ha
+      values: |
+        statefulset:
+          replicaCount: 1
+          clustered: false
+          container:
+            resources:
+              requests:
+                cpu: 4
+                memory: 8Gi
+              limits:
+                cpu: 8
+                memory: 16Gi
+
+        ingress:
+          enabled: true
+          hosts: nexus.galluman.com
+          hostPath: /
+          incressClassName: nginx
+          tls:
+            - secretName: nexus-ingress-tls
+              hosts:
+              - nexus.galluman.com
+          annotations:
+            cert-manager.io/cluster-issuer: lets-encrypt
+
+        pvc:
+          storage: 200Gi
+
+        nexus:
+          docker:
+            enabled: true
+            registries:
+            - host: docker.galluman.com
+              port: 5000
+            - host: docker-proxy.galluman.com
+              port: 5001
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: build
+  syncPolicy:
+    automated: {}
