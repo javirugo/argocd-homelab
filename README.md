@@ -2,6 +2,13 @@
 
 I use this simple repository to populate my Homelab kubernetes cluster with all tools I usually require.
 
+It deploys:
+
+- Base k8s objects (such as namespaces, an ingress for argocd, some secrets, a cert-manager clusterissuer, etc.)
+- Gitea
+- Hasicorp's Vault (single instance, no dev-mode)
+- MySQL Operator and a InnoDB cluster
+
 ## Requirements
 
 - Working Kubernetes cluster.
