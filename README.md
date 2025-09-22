@@ -7,7 +7,7 @@ It deploys:
 - Base k8s objects (such as namespaces, an ingress for argocd, some secrets, a cert-manager clusterissuer, etc.)
 - Gitea
 - Hasicorp's Vault (single instance, no dev-mode, persistant file storage...)
-- MySQL Operator and a InnoDB cluster
+- MySQL Operator and an InnoDB cluster for the Homelab tools (for gitea for example).
 
 ## Requirements
 
