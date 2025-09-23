@@ -58,6 +58,8 @@ spec:
 
         pvc:
           storage: 200Gi
+          volumeClaimTemplate:
+            enabled: true
 
         nexus:
           docker:
