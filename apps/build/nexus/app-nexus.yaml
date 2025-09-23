@@ -66,11 +66,6 @@ spec:
           enabled: true
           provisioner: "microk8s.io/hostpath"
 
-        pvc:
-          storage: 200Gi
-          volumeClaimTemplate:
-            enabled: true
-
         nexus:
           docker:
             enabled: true
