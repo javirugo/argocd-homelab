@@ -57,11 +57,10 @@ spec:
 
         storageClass:
           enabled: true
-          provisioner: "microk8s.io/hostpath"
+          name: ssd-hostpath
 
         pvc:
           storage: 200Gi
-          name: ssd-hostpath
           volumeClaimTemplate:
             enabled: true
 
