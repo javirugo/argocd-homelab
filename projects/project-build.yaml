@@ -10,15 +10,16 @@ spec:
   sourceRepos:
   - '*'
   destinations:
-  - namespace: argocd
-    server: https://kubernetes.default.svc
   - namespace: build
+    server: https://kubernetes.default.svc
+  - namespace: build-workflows
     server: https://kubernetes.default.svc
   roles:
   - name: build-role
     description: Sync privileges on build apps
     policies:
     - p, proj:build:build-role, applications, sync, build/*, allow
+    - p, proj:build:build-role, applications, sync, build-workflows/*, allow
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
