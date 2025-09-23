@@ -58,6 +58,7 @@ spec:
         storageClass:
           enabled: true
           name: ssd-hostpath
+          provisioner: microk8s.io/hostpath
 
         pvc:
           storage: 200Gi
