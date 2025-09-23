@@ -54,3 +54,20 @@ I use microk8s in my homelab server that makes it so easy to have a basic k8s cl
 All ingresses are currently using my domain: galluman.com. Please change them to use your own domain.
 
 Nexus has deprecated the nexus-repository-manager chats. They only support now the nxrm-ha deployment via helm which is intended for pro licensed nexus only. The helm chart deployed here includes a workaround to deploy nexus oss/ce using this chart, but it will only work on a fresh deployment, not in updates. See this issue thread and specifically this comment: https://github.com/sonatype/nxrm3-ha-repository/issues/125#issuecomment-2734648441.
+
+Vault includes a PodStart Lifecycle Hook to unseal itself using a secret that must be present in the "data" namespace. The secret must look like:
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vault-operator
+  namespace: data
+type: Opaque
+stringData:
+  UNSEAL_KEY1: UNSEAL_KEY1
+  UNSEAL_KEY2: UNSEAL_KEY2
+  UNSEAL_KEY3: UNSEAL_KEY3
+```
+
+This is obviously not secure at all, but a workaround for my Homelab. Please remove the lyfecycle section from the Vault Application manifest if you want to disable this.
