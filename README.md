@@ -70,4 +70,4 @@ stringData:
   UNSEAL_KEY3: UNSEAL_KEY3
 ```
 
-This is obviously not secure at all, but a workaround for my Homelab. Please remove the lyfecycle section from the Vault Application manifest if you want to disable this.
+This is obviously not secure at all, but a workaround for my Homelab as I don't have cloud personal accounts. Please remove the lyfecycle section from the Vault Application manifest if you want to disable this.
