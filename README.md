@@ -11,6 +11,7 @@ It deploys:
 - Sonarqube Community
 - MySQL Operator and an InnoDB cluster for the Homelab tools (for gitea for example).
 - CloudNativePG Operator and PostgreSQL single instance database for Homelab tools (for nexus and sonarqube for example).
+- Argo Workflows and Argo Events.
 
 ## Requirements
 
