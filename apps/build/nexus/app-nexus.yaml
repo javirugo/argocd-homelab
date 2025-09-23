@@ -56,6 +56,10 @@ spec:
               - docker.galluman.com
               - dockerproxy.galluman.com
 
+        storageClass:
+          enabled: true
+          provisioner: "microk8s.io/hostpath"
+
         pvc:
           storage: 200Gi
           volumeClaimTemplate:
