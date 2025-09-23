@@ -52,7 +52,7 @@ spec:
           postStart:
             - "/bin/sh"
             - "-c"
-            - "sleep 5 && vault operator unseal ${UNSEAL_KEY1} &&  vault operator unseal ${UNSEAL_KEY2} && vault operator unseal ${UNSEAL_KEY3}"
+            - "sleep 8 && vault operator unseal ${UNSEAL_KEY1} &&  vault operator unseal ${UNSEAL_KEY2} && vault operator unseal ${UNSEAL_KEY3}"
   destination:
     server: "https://kubernetes.default.svc"
     namespace: data
