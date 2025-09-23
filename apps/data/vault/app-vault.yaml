@@ -50,8 +50,6 @@ spec:
             secretName: vault-operator
             secretKey: UNSEAL_KEY3
           postStart:
-            - "/bin/sh"
-            - "-c"
             - "sleep 5;"
             - "vault operator unseal ${UNSEAL_KEY1};"
             - "vault operator unseal ${UNSEAL_KEY2};"
