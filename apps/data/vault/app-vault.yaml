@@ -39,6 +39,20 @@ spec:
             - hosts:
               - vault.galluman.com
               secretName: vault-ingress-tls
+          extraSecretEnvironmentVars:
+          - envName: UNSEAL_KEY1
+            secretName: vault-operator
+            secretKey: UNSEAL_KEY1
+          - envName: UNSEAL_KEY2
+            secretName: vault-operator
+            secretKey: UNSEAL_KEY2
+          - envName: UNSEAL_KEY3
+            secretName: vault-operator
+            secretKey: UNSEAL_KEY3
+          postStart:
+            - "/bin/sh"
+            - "-c"
+            - vault operator unseal $UNSEAL_KEY1 && vault operator unseal $UNSEAL_KEY2 && vault operator unseal $UNSEAL_KEY3"]
   destination:
     server: "https://kubernetes.default.svc"
     namespace: data
