@@ -18,6 +18,9 @@ spec:
           postgresql: "16"
         cluster:
           instances: 1
+          postgresql:
+            parameters:
+              max_connections: 300
         backups:
           enabled: false
   destination:
