@@ -34,15 +34,13 @@ metadata:
   namespace: build
 secrets:
 - name: argo-workflows-operator
-  apiVersion: v1
-  kind: ServiceAccount
 
 ---
 apiVersion: v1
 kind: Secret
+type: kubernetes.io/service-account-token
 metadata:
   name: argo-workflows-operator
   namespace: build
   annotations:
     kubernetes.io/service-account.name: argooperator
-type: kubernetes.io/service-account-token
