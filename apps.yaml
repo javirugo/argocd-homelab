@@ -12,6 +12,20 @@ stringData:
 
 
 ---
+# Secret to add the apps repository
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-apps
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: git
+  url: https://github.com/javirugo/argocd-applications.git
+
+
+---
 # Main project "argocd"
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject

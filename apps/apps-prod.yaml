@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/javirugo/argocd-applications.git
     targetRevision: main
-    path: /prod/
+    path: prod/
     directory:
       recurse: false
   destination:
