@@ -11,7 +11,7 @@ spec:
     targetRevision: main
     path: dev/
     directory:
-      recurse: false
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
     namespace: dev
