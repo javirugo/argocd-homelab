@@ -16,7 +16,7 @@ It deploys:
 ## Requirements
 
 - Working Kubernetes cluster.
-- ArgoCD installed in the "argocd" directory.
+- ArgoCD installed in the "argocd" namespace.
 - Nginx Ingress Controller installed in the cluter.
 - Cert-Manager installed in the cluster (a clusterissuer will be managed by argocd).
   - cert-manager will use a cloudflare dns01 solver using letsencrypt. I have a free cloudflare account for managing my galluman.com zone, you can change that to whatever you want to use.
