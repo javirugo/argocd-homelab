@@ -47,7 +47,7 @@ spec:
           annotations:
             nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
             cert-manager.io/cluster-issuer: lets-encrypt
-            nginx.ingress.kubernetes.io/proxy-body-size: 10g
+            nginx.ingress.kubernetes.io/proxy-body-size: 1g
           tls:
             - secretName: nexus-ingress-tls
               hosts:
@@ -73,6 +73,8 @@ spec:
             - host: docker.galluman.com
               port: 5000
               secretName: nexus-ingress-tls
+              annotations:
+                nginx.ingress.kubernetes.io/proxy-body-size: 1g
             - host: dockerproxy.galluman.com
               port: 5001
               secretName: nexus-ingress-tls
