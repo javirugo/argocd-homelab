@@ -1,0 +1,19 @@
+# Application of all applications
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 0-apps-applications
+  namespace: argocd
+spec:
+  project: dev
+  source:
+    repoURL: https://github.com/javirugo/argocd-applications.git
+    targetRevision: main
+    path: /dev/
+    directory:
+      recurse: false
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated: {}

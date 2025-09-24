@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: dev
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  description: Data
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: argocd
+    server: https://kubernetes.default.svc
+  - namespace: dev
+    server: https://kubernetes.default.svc
+  roles:
+  - name: dev-role
+    description: Sync privileges on dev apps
+    policies:
+    - p, proj:dev:dev-role, applications, sync, dev/*, allow
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
