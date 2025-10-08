@@ -86,13 +86,12 @@ spec:
             enabled: false
 
         # --- Arguments ---
-        additionalArguments:
-          - "--providers.kubernetesgateway=true"
-          - "--providers.kubernetesGateway.experimentalChannel=true"
-          - "--entrypoints.web.address=:8000"
-          - "--entrypoints.websecure.address=:8443"
-          - "--entrypoints.traefik.address=:9000"
-          - "--api.dashboard=true"
+        # additionalArguments:
+        #   - "--providers.kubernetesgateway=true"
+        #   - "--entrypoints.web.address=:8000"
+        #   - "--entrypoints.websecure.address=:8443"
+        #   - "--entrypoints.traefik.address=:9000"
+        #   - "--api.dashboard=true"
   destination:
     server: "https://kubernetes.default.svc"
     namespace: build
