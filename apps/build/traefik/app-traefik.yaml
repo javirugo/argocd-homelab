@@ -20,20 +20,56 @@ spec:
           name: "default"
         experimental:
           kubernetesGateway:
-            enabled: false
-        ingressClass:
-          enabled: true
-          isDefaultClass: false
+            enabled: true
         ports:
           traefik:
             port: 8080
           web:
             port: 8000
         service:
-          enabled: true
-          type: ClusterIP
+          enabled: false
+        ports:
+          web:
+            port: 8000
+            expose: true
+            exposedPort: 80
+            protocol: TCP
+          websecure:
+            port: 8443
+            expose: true
+            exposedPort: 443
+            protocol: TCP
+        ingressRoute:
+          dashboard:
+            enabled: false
+        api:
+          dashboard: true
+          insecure: true
   destination:
     server: "https://kubernetes.default.svc"
     namespace: build
   syncPolicy:
     automated: {}
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-nodeport
+  namespace: build
+  labels:
+    app.kubernetes.io/name: traefik
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: traefik
+  ports:
+    - name: web
+      port: 80
+      targetPort: 8000
+      nodePort: 30080
+    - name: websecure
+      port: 443
+      targetPort: 8443
+      nodePort: 30443
