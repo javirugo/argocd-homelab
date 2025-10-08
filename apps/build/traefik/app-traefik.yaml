@@ -28,6 +28,7 @@ spec:
             port: 8000
         service:
           enabled: true
+          type: ClusterIP
         ports:
           web:
             port: 8000
