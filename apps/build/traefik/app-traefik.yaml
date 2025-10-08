@@ -87,6 +87,7 @@ spec:
         # --- Arguments ---
         additionalArguments:
           - "--providers.kubernetesgateway=true"
+          - "--providers.kubernetesGateway.experimentalChannel=true"
           - "--entrypoints.web.address=:8000"
           - "--entrypoints.websecure.address=:8443"
           - "--entrypoints.traefik.address=:9000"
