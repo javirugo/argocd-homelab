@@ -27,7 +27,7 @@ spec:
           web:
             port: 8000
         service:
-          enabled: false
+          enabled: true
         ports:
           web:
             port: 8000
@@ -43,7 +43,7 @@ spec:
             protocol: TCP
         ingressRoute:
           dashboard:
-            enabled: false
+            enabled: true
         api:
           dashboard: true
           insecure: true
