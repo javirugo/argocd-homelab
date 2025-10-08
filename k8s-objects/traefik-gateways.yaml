@@ -6,21 +6,21 @@ metadata:
 spec:
   gatewayClassName: traefik
   listeners:
-    - name: web
-      protocol: HTTP
+    - name: websecure
+      protocol: HTTPS
       port: 8080
-      hostname: api-dev.example.com
+      hostname: api-dev.galluman.com
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: backend-api-dev-tls
+            kind: Secret
       allowedRoutes:
         namespaces:
           from: Selector
           selector:
             matchLabels:
               kubernetes.io/metadata.name: dev
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - name: backend-api-dev-tls
-            kind: Secret
 
 ---
 apiVersion: gateway.networking.k8s.io/v1
@@ -31,18 +31,18 @@ metadata:
 spec:
   gatewayClassName: traefik
   listeners:
-    - name: web
-      protocol: HTTP
+    - name: websecure
+      protocol: HTTPS
       port: 8080
-      hostname: api.example.com
+      hostname: api.galluman.com
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: backend-api-tls
+            kind: Secret
       allowedRoutes:
         namespaces:
           from: Selector
           selector:
             matchLabels:
               kubernetes.io/metadata.name: prod
-      tls:
-        mode: Terminate
-        certificateRefs:
-          - name: backend-api-prod-tls
-            kind: Secret
