@@ -10,7 +10,7 @@ spec:
   listeners:
     - name: websecure
       protocol: HTTPS
-      port: 8080
+      port: 443
       hostname: api-dev.galluman.com
       tls:
         mode: Terminate
@@ -37,7 +37,7 @@ spec:
   listeners:
     - name: websecure
       protocol: HTTPS
-      port: 8080
+      port: 80
       hostname: api.galluman.com
       tls:
         mode: Terminate
