@@ -15,8 +15,6 @@ spec:
         providers:
           kubernetesGateway:
             enabled: true
-        gateway:
-          enabled: true
         gatewayClass:
           enabled: true
           name: "default"
