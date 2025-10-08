@@ -18,7 +18,6 @@ spec:
             experimentalChannel: true
         gateway:
           enabled: true
-          namespace: default
         gatewayClass:
           enabled: true
           name: "default"
