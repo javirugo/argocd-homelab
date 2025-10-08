@@ -45,13 +45,13 @@ spec:
             websecure:
               nodePort: 30443
         providers:
+          kubernetesGateway:
+            enabled: true
+            experimentalChannel: true
           kubernetesIngress:
             enabled: false
           kubernetesCRD:
             enabled: false
-          kubernetesGateway:
-            enabled: true
-            experimentalChannel: true
         dashboard:
           enabled: true
           service:
@@ -64,7 +64,7 @@ spec:
             enabled: false
         additionalArguments:
           - "--providers.kubernetesgateway=true"
-          - "--feature.gatewaysupport.experimentalfeatures=true"
+          - "--providers.kubernetesgateway.experimentalchannel=true"
           - "--entrypoints.web.address=:8000"
           - "--entrypoints.websecure.address=:8443"
           - "--entrypoints.traefik.address=:9000"
