@@ -2,7 +2,7 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: backend-api-dev
-  namespace: build
+  namespace: default
   annotations:
     cert-manager.io/cluster-issuer: lets-encrypt
 spec:
@@ -29,7 +29,7 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: backend-api-prod
-  namespace: build
+  namespace: default
   annotations:
     cert-manager.io/cluster-issuer: lets-encrypt
 spec:
