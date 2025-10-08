@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+spec:
+  project: data
+  source:
+    chart: traefik
+    repoURL: https://traefik.github.io/charts
+    targetRevision: 37.1.2
+    helm:
+      releaseName: traefik
+      values: |
+        experimental:
+          kubernetesGateway:
+            enabled: false
+        ingressClass:
+          enabled: true
+        ports:
+          traefik:
+            port: 8080
+          web:
+            port: 8000
+        service:
+          enabled: true
+          type: ClusterIP
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: data
+  syncPolicy:
+    automated: {}
