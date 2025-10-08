@@ -17,6 +17,10 @@ spec:
           enabled: true
           replicas: 1
 
+        experimental:
+          kubernetesGateway:
+            enabled: true
+
         # --- Ports ---
         ports:
           web:
@@ -83,7 +87,6 @@ spec:
         # --- Arguments ---
         additionalArguments:
           - "--providers.kubernetesgateway=true"
-          - "--experimental.kubernetesgateway=true"
           - "--entrypoints.web.address=:8000"
           - "--entrypoints.websecure.address=:8443"
           - "--entrypoints.traefik.address=:9000"
