@@ -17,10 +17,10 @@ spec:
           enabled: true
           replicas: 1
 
-        # --- Entry points & ports ---
+        # --- Ports ---
         ports:
           web:
-            port: 80
+            port: 8000               # Must stay 8000 — internal default
             expose:
               default: true
             exposedPort: 80
@@ -28,7 +28,7 @@ spec:
             protocol: TCP
 
           websecure:
-            port: 443
+            port: 8443               # Must stay 8443 — internal default
             expose:
               default: true
             exposedPort: 443
@@ -52,9 +52,6 @@ spec:
               nodePort: 30080
             websecure:
               nodePort: 30443
-            traefik:
-              # dashboard (ClusterIP only)
-              nodePort: null
 
         # --- Providers ---
         providers:
@@ -74,14 +71,14 @@ spec:
             type: ClusterIP
           ingressRoute: false
 
-        # --- Logging ---
+        # --- Logs ---
         logs:
           general:
             level: INFO
           access:
             enabled: true
 
-        # --- Disable Pilot, Metrics, Tracing ---
+        # --- Disable Pilot & Metrics ---
         pilot:
           enabled: false
 
@@ -89,17 +86,13 @@ spec:
           prometheus:
             enabled: false
 
-        # Do not define tracing.enabled here, just omit
-
-        # --- Extra Arguments ---
+        # --- Arguments ---
         additionalArguments:
           - "--providers.kubernetesgateway=true"
-          - "--providers.kubernetescrd=false"
-          - "--providers.kubernetesingress=false"
-          - "--api.dashboard=true"
-          - "--entrypoints.web.address=:80"
-          - "--entrypoints.websecure.address=:443"
+          - "--entrypoints.web.address=:8000"
+          - "--entrypoints.websecure.address=:8443"
           - "--entrypoints.traefik.address=:9000"
+          - "--api.dashboard=true"
 
   destination:
     server: "https://kubernetes.default.svc"
