@@ -89,7 +89,7 @@ spec:
           - "--entrypoints.traefik.address=:9000"
           - "--api.dashboard=true"
           - "--api.insecure=true"
-
+          - "--providers.kubernetesgateway.experimentalchannel=true"
   destination:
     server: "https://kubernetes.default.svc"
     namespace: build
