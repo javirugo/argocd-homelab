@@ -12,51 +12,86 @@ spec:
     helm:
       releaseName: traefik
       values: |
-        providers:
-          kubernetesGateway:
-            enabled: true
-        gatewayClass:
-          enabled: true
-          name: "default"
-        experimental:
-          kubernetesGateway:
-            enabled: true
-        ingressClass:
-          enabled: false
-        service:
-          enabled: true
-          type: ClusterIP
-        ingressRoute:
-          dashboard:
-            enabled: true
+        ports:
+          # Defines the HTTP entry point named 'web'
+          web:
+            port: 80
+            nodePort: 30080
+            # Instructs this entry point to redirect all traffic to the 'websecure' entry point
+            redirections:
+              entryPoint:
+                to: websecure
+                scheme: https
+                permanent: true
+          # Defines the HTTPS entry point named 'websecure'
+          websecure:
+            port: 443
+            nodePort: 30443
+
+        # Enables the dashboard in Secure Mode
         api:
           dashboard: true
           insecure: true
+        ingressRoute:
+          dashboard:
+            enabled: true
+            matchRule: Host(`dashboard.docker.localhost`)
+            entryPoints:
+              - websecure
+
+        # We will route with Gateway API instead.
+        ingressClass:
+          enabled: false
+
+        # Enable Gateway API Provider & Disables the KubernetesIngress provider
+        # Providers tell Traefik where to find routing configuration.
+        providers:
+          kubernetesIngress:
+            enabled: false
+          kubernetesGateway:
+            enabled: true
+
+
+        ## Gateway Listeners
+        gateway:
+          listeners:
+            web:           # HTTP listener that matches entryPoint `web`
+              port: 80
+              protocol: HTTP
+              namespacePolicy:
+                from: All
+            websecure:         # HTTPS listener that matches entryPoint `websecure`
+              port: 443
+              protocol: HTTPS  # TLS terminates inside Traefik
+              namespacePolicy:
+                from: All
+              mode: Terminate
+
+        # providers:
+        #   kubernetesIngress:
+        #     enabled: false
+        #   kubernetesGateway:
+        #     enabled: true
+        # gatewayClass:
+        #   enabled: true
+        #   name: "default"
+        # experimental:
+        #   kubernetesGateway:
+        #     enabled: true
+        # ingressClass:
+        #   enabled: false
+        # service:
+        #   enabled: true
+        #   type: ClusterIP
+        # ingressRoute:
+        #   dashboard:
+        #     enabled: true
+        # api:
+        #   dashboard: true
+        #   insecure: true
   destination:
     server: "https://kubernetes.default.svc"
     namespace: build
   syncPolicy:
     automated: {}
 
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: traefik-nodeport
-  namespace: build
-  labels:
-    app.kubernetes.io/name: traefik
-spec:
-  type: NodePort
-  selector:
-    app.kubernetes.io/name: traefik
-  ports:
-    - name: web
-      port: 80
-      targetPort: 8000
-      nodePort: 30080
-    - name: websecure
-      port: 443
-      targetPort: 8443
-      nodePort: 30443
