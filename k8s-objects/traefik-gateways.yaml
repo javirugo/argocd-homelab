@@ -6,7 +6,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: lets-encrypt
 spec:
-  gatewayClassName: default
+  gatewayClassName: traefik
   listeners:
     - name: websecure
       protocol: HTTPS
@@ -33,7 +33,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: lets-encrypt
 spec:
-  gatewayClassName: default
+  gatewayClassName: traefik
   listeners:
     - name: websecure
       protocol: HTTPS
