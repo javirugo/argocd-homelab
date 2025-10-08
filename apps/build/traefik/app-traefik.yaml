@@ -64,7 +64,7 @@ spec:
             enabled: false
         additionalArguments:
           - "--providers.kubernetesgateway=true"
-          - "--providers.kubernetesGateway.experimentalChannel=true"
+          - "--feature.gatewaysupport.experimentalfeatures=true"
           - "--entrypoints.web.address=:8000"
           - "--entrypoints.websecure.address=:8443"
           - "--entrypoints.traefik.address=:9000"
