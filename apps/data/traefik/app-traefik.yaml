@@ -17,6 +17,7 @@ spec:
             enabled: false
         ingressClass:
           enabled: true
+          isDefaultClass: false
         ports:
           traefik:
             port: 8080
