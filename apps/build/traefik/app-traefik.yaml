@@ -20,21 +20,19 @@ spec:
         # --- Ports ---
         ports:
           web:
-            port: 8000               # Must stay 8000 — internal default
+            port: 8000
             expose:
               default: true
             exposedPort: 80
             nodePort: 30080
             protocol: TCP
-
           websecure:
-            port: 8443               # Must stay 8443 — internal default
+            port: 8443
             expose:
               default: true
             exposedPort: 443
             nodePort: 30443
             protocol: TCP
-
           traefik:
             port: 9000
             exposedPort: 9000
@@ -64,7 +62,6 @@ spec:
         # --- Dashboard ---
         dashboard:
           enabled: true
-          domain: traefik.local
           service:
             type: ClusterIP
           ingressRoute: false
@@ -99,3 +96,50 @@ spec:
   syncPolicy:
     automated: {}
 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: traefik-dashboard
+  namespace: build
+  labels:
+    app.kubernetes.io/name: traefik
+spec:
+  type: ClusterIP
+  ports:
+    - name: dashboard
+      port: 9000
+      targetPort: 9000
+  selector:
+    app.kubernetes.io/name: traefik
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    cert-manager.io/cluster-issuer: lets-encrypt
+  labels:
+    app: traefik
+  name: traefik
+  namespace: build
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: traefik.galluman.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: traefik-dashboard
+            port:
+              name: dashboard
+  tls:
+  - hosts:
+    - traefik.galluman.com
+    secretName: traefik-ingress-tls
