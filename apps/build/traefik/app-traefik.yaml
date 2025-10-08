@@ -17,26 +17,28 @@ spec:
           enabled: true
           replicas: 1
 
-        # --- EntryPoints (NodePorts for Gateway traffic) ---
+        # --- Entry points & ports ---
         ports:
           web:
             port: 80
-            nodePort: 30080
-            expose: true
+            expose:
+              default: true
             exposedPort: 80
+            nodePort: 30080
             protocol: TCP
 
           websecure:
             port: 443
-            nodePort: 30443
-            expose: true
+            expose:
+              default: true
             exposedPort: 443
+            nodePort: 30443
             protocol: TCP
 
-          # Dashboard (internal only, ClusterIP)
           traefik:
             port: 9000
-            expose: true
+            expose:
+              default: true
             exposedPort: 9000
             protocol: TCP
 
@@ -51,10 +53,10 @@ spec:
             websecure:
               nodePort: 30443
             traefik:
-              # dashboard, not exposed externally
+              # dashboard (ClusterIP only)
               nodePort: null
 
-        # --- Disable traditional Ingress providers ---
+        # --- Providers ---
         providers:
           kubernetesIngress:
             enabled: false
@@ -62,47 +64,42 @@ spec:
             enabled: false
           kubernetesGateway:
             enabled: true
-            experimentalChannel: true  # Enable Gateway API controller
+            experimentalChannel: true
 
-        # --- Enable Dashboard (internal only) ---
+        # --- Dashboard ---
         dashboard:
           enabled: true
           domain: traefik.local
           service:
             type: ClusterIP
-            annotations: {}
-          ingressRoute: false  # do not expose dashboard via ingress
+          ingressRoute: false
 
-        # --- Logs ---
+        # --- Logging ---
         logs:
           general:
             level: INFO
           access:
             enabled: true
 
-        # --- Security ---
+        # --- Disable Pilot, Metrics, Tracing ---
         pilot:
           enabled: false
 
-        # Disable metrics, tracing, and other integrations
         metrics:
           prometheus:
             enabled: false
-        tracing:
-          enabled: false
 
-        # --- Additional settings ---
+        # Do not define tracing.enabled here, just omit
+
+        # --- Extra Arguments ---
         additionalArguments:
-          # Only enable Gateway API support (no ingress)
           - "--providers.kubernetesgateway=true"
           - "--providers.kubernetescrd=false"
           - "--providers.kubernetesingress=false"
-          # Keep dashboard local
           - "--api.dashboard=true"
           - "--entrypoints.web.address=:80"
           - "--entrypoints.websecure.address=:443"
           - "--entrypoints.traefik.address=:9000"
-          - "--serversTransport.insecureSkipVerify=true"
 
   destination:
     server: "https://kubernetes.default.svc"
