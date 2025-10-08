@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-rollouts
+  namespace: argocd
+spec:
+  project: build
+  source:
+    chart: argo-rollouts
+    repoURL: https://argoproj.github.io/argo-helm
+    targetRevision: 2.40.5
+    helm:
+      releaseName: argo-rollouts
+      values: |
+        namespaceOverride: build
+        dashboard:
+          enabled: true
+          ingress:
+            enabled: true
+            hosts:
+              - rollouts.galluman.com
+            tls:
+            - secretName: argorollouts-ingress-tls
+              hosts:
+                - rollouts.galluman.com
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: build
+  syncPolicy:
+    automated: {}
