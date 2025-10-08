@@ -13,7 +13,7 @@ spec:
       releaseName: traefik
       values: |
         image:
-          tag: "v3.4.5"
+          tag: "v3.4.3"
         experimental:
           kubernetesGateway:
             enabled: true
@@ -67,7 +67,6 @@ spec:
         additionalArguments:
           - "--providers.kubernetesgateway=true"
           - "--providers.kubernetesgateway.experimentalchannel=true"
-          - "--providers.kubernetesGateway.experimentalChannel=true"
           - "--entrypoints.web.address=:8000"
           - "--entrypoints.websecure.address=:8443"
           - "--entrypoints.traefik.address=:9000"
