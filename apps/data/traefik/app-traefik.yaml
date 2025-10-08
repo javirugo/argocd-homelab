@@ -4,7 +4,7 @@ metadata:
   name: traefik
   namespace: argocd
 spec:
-  project: data
+  project: build
   source:
     chart: traefik
     repoURL: https://traefik.github.io/charts
@@ -28,6 +28,6 @@ spec:
           type: ClusterIP
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: data
+    namespace: build
   syncPolicy:
     automated: {}
