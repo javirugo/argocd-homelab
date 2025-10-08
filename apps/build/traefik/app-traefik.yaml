@@ -21,27 +21,11 @@ spec:
         experimental:
           kubernetesGateway:
             enabled: true
-        ports:
-          traefik:
-            port: 8080
-          web:
-            port: 8000
+        ingressClass:
+          enabled: false
         service:
           enabled: true
           type: ClusterIP
-        ports:
-          web:
-            port: 8000
-            expose:
-              default: true
-            exposedPort: 80
-            protocol: TCP
-          websecure:
-            port: 8443
-            expose:
-              default: true
-            exposedPort: 443
-            protocol: TCP
         ingressRoute:
           dashboard:
             enabled: true
