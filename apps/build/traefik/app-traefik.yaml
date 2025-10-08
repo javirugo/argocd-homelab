@@ -13,7 +13,6 @@ spec:
       releaseName: traefik
       values: |
         image:
-          name: traefik
           tag: "v3.4.2"
         experimental:
           kubernetesGateway:
