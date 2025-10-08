@@ -55,7 +55,7 @@ spec:
         gateway:
           listeners:
             web:           # HTTP listener that matches entryPoint `web`
-              port: 80
+              port: 8080
               protocol: HTTP
               namespacePolicy:
                 from: All
