@@ -13,7 +13,7 @@ spec:
       releaseName: traefik
       values: |
         image:
-          tag: "v3.4.2"
+          tag: "v3.4.5"
         experimental:
           kubernetesGateway:
             enabled: true
