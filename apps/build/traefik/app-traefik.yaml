@@ -12,16 +12,9 @@ spec:
     helm:
       releaseName: traefik
       values: |
-        # --- General ---
-        deployment:
-          enabled: true
-          replicas: 1
-
         experimental:
           kubernetesGateway:
             enabled: true
-
-        # --- Ports ---
         ports:
           web:
             port: 8000
@@ -41,7 +34,6 @@ spec:
             port: 9000
             exposedPort: 9000
             protocol: TCP
-
         service:
           enabled: true
           type: NodePort
@@ -52,8 +44,6 @@ spec:
               nodePort: 30080
             websecure:
               nodePort: 30443
-
-        # --- Providers ---
         providers:
           kubernetesIngress:
             enabled: false
@@ -62,36 +52,16 @@ spec:
           kubernetesGateway:
             enabled: true
             experimentalChannel: true
-
-        # --- Dashboard ---
         dashboard:
           enabled: true
           service:
             type: ClusterIP
           ingressRoute: false
-
-        # --- Logs ---
-        logs:
-          general:
-            level: INFO
-          access:
-            enabled: true
-
-        # --- Disable Pilot & Metrics ---
         pilot:
           enabled: false
-
         metrics:
           prometheus:
             enabled: false
-
-        # --- Arguments ---
-        # additionalArguments:
-        #   - "--providers.kubernetesgateway=true"
-        #   - "--entrypoints.web.address=:8000"
-        #   - "--entrypoints.websecure.address=:8443"
-        #   - "--entrypoints.traefik.address=:9000"
-        #   - "--api.dashboard=true"
   destination:
     server: "https://kubernetes.default.svc"
     namespace: build
