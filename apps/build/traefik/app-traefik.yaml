@@ -12,76 +12,98 @@ spec:
     helm:
       releaseName: traefik
       values: |
+        # --- General ---
+        deployment:
+          enabled: true
+          replicas: 1
+
+        # --- EntryPoints (NodePorts for Gateway traffic) ---
         ports:
-          # Defines the HTTP entry point named 'web'
           web:
-            port: 8080
+            port: 80
             nodePort: 30080
-            # Instructs this entry point to redirect all traffic to the 'websecure' entry point
-            redirections:
-              entryPoint:
-                to: websecure
-                scheme: https
-                permanent: true
-          # Defines the HTTPS entry point named 'websecure'
+            expose: true
+            exposedPort: 80
+            protocol: TCP
+
           websecure:
-            port: 8443
+            port: 443
             nodePort: 30443
+            expose: true
+            exposedPort: 443
+            protocol: TCP
 
-        # Enables the dashboard in Secure Mode
-        api:
-          dashboard: true
-          insecure: true
-        ingressRoute:
-          dashboard:
-            enabled: true
-            entryPoints:
-              - web
+          # Dashboard (internal only, ClusterIP)
+          traefik:
+            port: 9000
+            expose: true
+            exposedPort: 9000
+            protocol: TCP
 
-        # We will route with Gateway API instead.
-        ingressClass:
-          enabled: false
+        service:
+          enabled: true
+          type: NodePort
+          spec:
+            externalTrafficPolicy: Cluster
+          ports:
+            web:
+              nodePort: 30080
+            websecure:
+              nodePort: 30443
+            traefik:
+              # dashboard, not exposed externally
+              nodePort: null
 
-        # Enable Gateway API Provider & Disables the KubernetesIngress provider
-        # Providers tell Traefik where to find routing configuration.
+        # --- Disable traditional Ingress providers ---
         providers:
           kubernetesIngress:
             enabled: false
+          kubernetesCRD:
+            enabled: false
           kubernetesGateway:
             enabled: true
+            experimentalChannel: true  # Enable Gateway API controller
 
+        # --- Enable Dashboard (internal only) ---
+        dashboard:
+          enabled: true
+          domain: traefik.local
+          service:
+            type: ClusterIP
+            annotations: {}
+          ingressRoute: false  # do not expose dashboard via ingress
 
-        ## Gateway Listeners
-        gateway:
-          listeners:
-            web:           # HTTP listener that matches entryPoint `web`
-              port: 8080
-              protocol: HTTP
-              namespacePolicy:
-                from: All
+        # --- Logs ---
+        logs:
+          general:
+            level: INFO
+          access:
+            enabled: true
 
-        # providers:
-        #   kubernetesIngress:
-        #     enabled: false
-        #   kubernetesGateway:
-        #     enabled: true
-        # gatewayClass:
-        #   enabled: true
-        #   name: "default"
-        # experimental:
-        #   kubernetesGateway:
-        #     enabled: true
-        # ingressClass:
-        #   enabled: false
-        # service:
-        #   enabled: true
-        #   type: ClusterIP
-        # ingressRoute:
-        #   dashboard:
-        #     enabled: true
-        # api:
-        #   dashboard: true
-        #   insecure: true
+        # --- Security ---
+        pilot:
+          enabled: false
+
+        # Disable metrics, tracing, and other integrations
+        metrics:
+          prometheus:
+            enabled: false
+        tracing:
+          enabled: false
+
+        # --- Additional settings ---
+        additionalArguments:
+          # Only enable Gateway API support (no ingress)
+          - "--providers.kubernetesgateway=true"
+          - "--providers.kubernetescrd=false"
+          - "--providers.kubernetesingress=false"
+          # Keep dashboard local
+          - "--api.dashboard=true"
+          - "--entrypoints.web.address=:80"
+          - "--entrypoints.websecure.address=:443"
+          - "--entrypoints.traefik.address=:9000"
+          - "--serversTransport.insecureSkipVerify=true"
+
   destination:
     server: "https://kubernetes.default.svc"
     namespace: build
