@@ -12,7 +12,10 @@ spec:
       hostname: api-dev.example.com
       allowedRoutes:
         namespaces:
-          from: dev
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: dev
       tls:
         mode: Terminate
         certificateRefs:
@@ -34,7 +37,10 @@ spec:
       hostname: api.example.com
       allowedRoutes:
         namespaces:
-          from: dev
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: prod
       tls:
         mode: Terminate
         certificateRefs:
