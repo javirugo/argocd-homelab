@@ -12,6 +12,10 @@ spec:
     helm:
       releaseName: traefik
       values: |
+        providers:
+          kubernetesGateway:
+            enabled: true
+            experimentalChannel: true
         gateway:
           enabled: true
           namespace: default
