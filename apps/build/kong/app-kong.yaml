@@ -52,10 +52,13 @@ spec:
 
         # Enable Gateway API controller explicitly
         env:
-          - name: CONTROLLER_MODE
-            value: "gateway"
-          - name: CONTROLLER_GATEWAY_API
-            value: "true"
+          database: "off" # <— FIXED: required field
+          log_level: "info"
+          anonymous_reports: "off"
+          router_flavor: "expressions"
+          # Gateway API mode
+          CONTROLLER_MODE: "gateway"
+          CONTROLLER_GATEWAY_API: "true"
 
         # Enable useful plugins by default
         plugins:
