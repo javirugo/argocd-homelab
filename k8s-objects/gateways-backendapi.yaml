@@ -3,6 +3,8 @@ kind: Gateway
 metadata:
   name: backend-api-dev
   namespace: dev
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt
 spec:
   gatewayClassName: kong
   listeners:
@@ -26,6 +28,8 @@ kind: Gateway
 metadata:
   name: backend-api-prod
   namespace: prod
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt
 spec:
   gatewayClassName: kong
   listeners:
