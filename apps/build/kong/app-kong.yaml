@@ -60,11 +60,6 @@ spec:
           CONTROLLER_MODE: "gateway"
           CONTROLLER_GATEWAY_API: "true"
 
-        # Enable useful plugins by default
-        plugins:
-          - cors
-          - rate-limiting
-
         # Enable metrics if you want Prometheus
         monitoring:
           enabled: false
