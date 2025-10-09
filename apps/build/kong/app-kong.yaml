@@ -62,17 +62,8 @@ spec:
 
         # Enable useful plugins by default
         plugins:
-          configMaps:
-            enabled: true
-          # Include core plugins
-          bundled:
-            - cors
-            - key-auth
-            - rate-limiting
-            - request-size-limiting
-            - ip-restriction
-            - request-transformer
-            - response-transformer
+          - cors
+          - rate-limiting
 
         # Enable metrics if you want Prometheus
         monitoring:
