@@ -1,0 +1,91 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sonarqube
+  namespace: argocd
+spec:
+  project: build
+  source:
+    chart: kong
+    repoURL: https://charts.konghq.com
+    targetRevision: 2.52.0
+    helm:
+      releaseName: kong
+      values: |
+        gateway:
+          enabled: true
+          deployment:
+            enabled: true
+            replicaCount: 1
+
+        # Disable everything related to Ingress
+        controller:
+          enabled: false
+
+        # Disable Kuma/Kong Mesh
+        kuma:
+          enabled: false
+
+        # Expose proxy for external traffic (Gateway API will point here)
+        proxy:
+          type: NodePort
+          http:
+            enabled: true
+            servicePort: 80
+            nodePort: 30080
+          tls:
+            enabled: true
+            servicePort: 443
+            nodePort: 30443
+
+        # Admin API (dashboard) only inside the cluster
+        admin:
+          enabled: true
+          type: ClusterIP
+          http:
+            enabled: true
+            servicePort: 8001
+
+        # Manager UI (Enterprise only) - disabled for OSS
+        manager:
+          enabled: false
+
+        # Enable Gateway API controller explicitly
+        env:
+          - name: CONTROLLER_MODE
+            value: "gateway"
+          - name: CONTROLLER_GATEWAY_API
+            value: "true"
+
+        # Enable useful plugins by default
+        plugins:
+          configMaps:
+            enabled: true
+          # Include core plugins
+          bundled:
+            - cors
+            - key-auth
+            - rate-limiting
+            - request-size-limiting
+            - ip-restriction
+            - request-transformer
+            - response-transformer
+
+        # Enable metrics if you want Prometheus
+        monitoring:
+          enabled: false
+
+        # Optional: resource requests/limits
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: build
+  syncPolicy:
+    automated: {}
