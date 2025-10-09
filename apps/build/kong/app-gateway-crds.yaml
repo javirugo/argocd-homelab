@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gateway-api-crds
+  namespace: argocd
+spec:
+  project: build
+  source:
+    repoURL: https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.9.0/standard-install/standard-install.yaml
+    targetRevision: HEAD
+    path: ""
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: build
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
