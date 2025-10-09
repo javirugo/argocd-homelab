@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    cert-manager.io/cluster-issuer: lets-encrypt
+  labels:
+    app: kong
+  name: kong
+  namespace: build
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: kong.galluman.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kong-kong-admin
+            port:
+              name: kong-admin
+  tls:
+  - hosts:
+    - kong.galluman.com
+    secretName: kong-ingress-tls
