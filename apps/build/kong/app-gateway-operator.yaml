@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kong-gateway-operator
+  namespace: argocd
+spec:
+  project: build
+  source:
+    chart: gateway-operator
+    repoURL: https://charts.konghq.com
+    targetRevision: 0.6.1
+    helm:
+      releaseName: kong-gateway-operator
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: build
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - ServerSideApply=true
