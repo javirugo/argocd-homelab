@@ -20,7 +20,11 @@ spec:
 
         # Disable everything related to Ingress
         controller:
-          enabled: false
+          enabled: true
+          ingressClass: kong
+          env:
+            CONTROLLER_MODE: "gateway"
+            CONTROLLER_GATEWAY_API: "true"
 
         # Disable Kuma/Kong Mesh
         kuma:
@@ -57,8 +61,6 @@ spec:
           anonymous_reports: "off"
           router_flavor: "expressions"
           # Gateway API mode
-          CONTROLLER_MODE: "gateway"
-          CONTROLLER_GATEWAY_API: "true"
 
         # Enable metrics if you want Prometheus
         monitoring:
