@@ -1,14 +1,12 @@
-apiVersion: gateway.networking.k8s.io/v1
+apiVersion: gateway.networking.k8s.io/v1beta1
 kind: Gateway
 metadata:
   name: backend-api-dev
   namespace: dev
-  annotations:
-    cert-manager.io/cluster-issuer: lets-encrypt
 spec:
   gatewayClassName: kong
   listeners:
-    - name: websecure
+    - name: https
       protocol: HTTPS
       port: 443
       hostname: api-dev.galluman.com
@@ -17,23 +15,26 @@ spec:
         certificateRefs:
           - name: backend-api-dev-tls
             kind: Secret
-      allowedRoutes:
-        namespaces:
-          from: Same
+  dataplane:
+    service:
+      type: NodePort
+      ports:
+        - name: https
+          port: 443
+          targetPort: 8443
+          nodePort: 30443
 
 
 ---
-apiVersion: gateway.networking.k8s.io/v1
+apiVersion: gateway.networking.k8s.io/v1beta1
 kind: Gateway
 metadata:
   name: backend-api-prod
   namespace: prod
-  annotations:
-    cert-manager.io/cluster-issuer: lets-encrypt
 spec:
   gatewayClassName: kong
   listeners:
-    - name: websecure
+    - name: https
       protocol: HTTPS
       port: 443
       hostname: api.galluman.com
@@ -42,6 +43,11 @@ spec:
         certificateRefs:
           - name: backend-api-prod-tls
             kind: Secret
-      allowedRoutes:
-        namespaces:
-          from: Same
+  dataplane:
+    service:
+      type: NodePort
+      ports:
+        - name: https
+          port: 443
+          targetPort: 8443
+          nodePort: 32443
