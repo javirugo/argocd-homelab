@@ -25,6 +25,9 @@ spec:
           env:
             CONTROLLER_MODE: "gateway"
             CONTROLLER_GATEWAY_API: "true"
+          args:
+            - "--controller-gateway-api=true"
+            - "--controller-mode=gateway"
 
         # Disable Kuma/Kong Mesh
         kuma:
