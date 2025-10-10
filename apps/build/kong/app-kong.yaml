@@ -16,3 +16,5 @@ spec:
     namespace: build
   syncPolicy:
     automated: {}
+    syncOptions:
+      - ServerSideApply=true
