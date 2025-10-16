@@ -32,11 +32,11 @@ spec:
 apiVersion: oci.upbound.io/v1beta1
 kind: ProviderConfig
 metadata:
-  name: default
+  name: provider-oci
 spec:
   credentials:
     source: Secret
     secretRef:
-      namespace: crossplane-system
+      namespace: build
       name: oci-auth
       key: authconfig
