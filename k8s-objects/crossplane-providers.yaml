@@ -1,0 +1,33 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: cloudflare-provider-secret
+  namespace: build
+spec:
+  refreshInterval: "300s"
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    name: cloudflare-tokens
+    creationPolicy: Owner
+  data:
+    - secretKey: dns-api-token
+      remoteRef:
+        key: homelab/data/cloudflare
+        property: dns-api-token
+
+
+---
+apiVersion: cloudflare.crossplane.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: cloudflare
+  namespace: build
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: build
+      name: cloudflare-provider-secret
+      key: dns-api-token
