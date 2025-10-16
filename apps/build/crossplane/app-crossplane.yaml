@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: crossplane
+  namespace: argocd
+spec:
+  project: build
+  source:
+    chart: crossplane
+    repoURL: https://charts.crossplane.io/stable
+    targetRevision: 2.0.2
+    helm:
+      releaseName: crossplane
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: build
+  syncPolicy:
+    automated: {}
