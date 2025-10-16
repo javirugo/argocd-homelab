@@ -1,7 +1,7 @@
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: cloudflare-provider-secret
+  name: oci-auth
   namespace: build
 spec:
   refreshInterval: "300s"
@@ -9,25 +9,34 @@ spec:
     name: vault
     kind: ClusterSecretStore
   target:
-    name: cloudflare-tokens
+    name: oci-auth
     creationPolicy: Owner
   data:
-    - secretKey: dns-api-token
+    - secretKey: authconfig
       remoteRef:
-        key: homelab/data/cloudflare
-        property: dns-api-token
+        key: homelab/data/oci
+        property: authconfig
 
 
 ---
-apiVersion: cloudflare.crossplane.io/v1alpha1
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-oci
+  namespace: build
+spec:
+  package: xpkg.upbound.io/upbound/provider-family-oci:v0.1.1
+
+
+---
+apiVersion: oci.upbound.io/v1beta1
 kind: ProviderConfig
 metadata:
-  name: cloudflare
-  namespace: build
+  name: default
 spec:
   credentials:
     source: Secret
     secretRef:
-      namespace: build
-      name: cloudflare-provider-secret
-      key: dns-api-token
+      namespace: crossplane-system
+      name: oci-auth
+      key: authconfig
