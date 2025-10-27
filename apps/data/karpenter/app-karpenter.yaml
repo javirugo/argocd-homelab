@@ -18,6 +18,13 @@ spec:
             tag: latest
         imagePullSecrets:
           - name: nexuspullsecret
+        settings:
+          featureGates:
+            nodeRepair: false
+            nodeOverlay: false
+            reservedCapacity: true
+            spotToSpotConsolidation: false
+            staticCapacity: false
   destination:
     server: "https://kubernetes.default.svc"
     namespace: data
