@@ -11,10 +11,26 @@ spec:
     targetRevision: 0.2.0
     helm:
       releaseName: kwok
-      values: |
-        args:
-          - --manage-nodes-with-annotation-selector=kwok.x-k8s.io/node-type=simulated
-          - --manage-all-pods=false
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: data
+  syncPolicy:
+    automated: {}
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kwok-stage-fast
+  namespace: argocd
+spec:
+  project: data
+  source:
+    chart: stage-fast
+    repoURL: https://kwok.sigs.k8s.io/charts/
+    targetRevision: 0.2.0
+    helm:
+      releaseName: kwok
   destination:
     server: "https://kubernetes.default.svc"
     namespace: data
