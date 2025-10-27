@@ -11,6 +11,13 @@ spec:
     targetRevision: main
     helm:
       releaseName: karpenter-kwok
+      values: |
+        controller:
+          image:
+            repository: docker.galluman.com/karpenter-kwok
+            tag: latest
+        imagePullSecrets:
+          - nexuspullsecret
   destination:
     server: "https://kubernetes.default.svc"
     namespace: data
