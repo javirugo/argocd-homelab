@@ -28,10 +28,11 @@ spec:
     automated: {}
 
 ---
-apiVersion: karpenter.sh/v1
+apiVersion: karpenter.sh/v1alpha5
 kind: Provisioner
 metadata:
   name: kwok
+  namespace: data
 spec:
   requirements:
     - key: "kubernetes.io/arch"
@@ -52,6 +53,7 @@ apiVersion: karpenter.k8s.aws/v1alpha1
 kind: AWSNodeTemplate
 metadata:
   name: kwok-provider
+  namespace: data
 spec:
   subnetSelector: {}
   securityGroupSelector: {}
