@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kwok
+  namespace: argocd
+spec:
+  project: data
+  source:
+    chart: kwok
+    repoURL: https://kwok.sigs.k8s.io/charts/
+    targetRevision: 0.2.0
+    helm:
+      releaseName: kwok
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: data
+  syncPolicy:
+    automated: {}
