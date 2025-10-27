@@ -6,8 +6,8 @@ metadata:
 spec:
   project: data
   source:
-    repoURL: https://github.com/kubernetes-sigs/karpenter.git
-    path: kwok/charts
+    repoURL: https://github.com/aws/karpenter-provider-aws.git
+    path: charts/karpenter
     targetRevision: main
     helm:
       releaseName: karpenter-kwok
