@@ -19,6 +19,8 @@ spec:
         imagePullSecrets:
           - name: nexuspullsecret
         settings:
+          clusterName: homelab
+          clusterEndpoint: https://192.168.100.2:16443
           featureGates:
             nodeRepair: false
             nodeOverlay: false
