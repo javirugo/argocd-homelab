@@ -1,35 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: karpenter-kwok
+  name: karpenter
   namespace: argocd
 spec:
   project: data
   source:
-    repoURL: https://github.com/aws/karpenter-provider-aws.git
-    path: charts/karpenter
-    targetRevision: main
+    chart: karpenter
+    repoURL: https://charts.karpenter.sh/
+    targetRevision: 0.16.3
     helm:
-      releaseName: karpenter-kwok
+      releaseName: karpenter
       values: |
-        replicas: 1
-        topologySpreadConstraints: []
         controller:
-          image:
-            repository: docker.galluman.com/karpenter-kwok
-            tag: latest
-            digest: ""
-        imagePullSecrets:
-          - name: nexuspullsecret
+          clusterName: "microk8s"
+          clusterEndpoint: "https://192.168.100.2:16443"
+          logLevel: "debug"
+        serviceAccount:
+          create: true
         settings:
-          clusterName: homelab
-          clusterEndpoint: https://192.168.100.2:16443
           featureGates:
-            nodeRepair: false
-            nodeOverlay: false
-            reservedCapacity: true
-            spotToSpotConsolidation: false
-            staticCapacity: false
+            Drift: false
   destination:
     server: "https://kubernetes.default.svc"
     namespace: data
