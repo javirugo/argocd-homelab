@@ -12,6 +12,16 @@ spec:
     helm:
       releaseName: karpenter
       values: |
+        controller:
+          env:
+            - name: AWS_REGION
+              value: "us-fake-1"
+            - name: AWS_ACCESS_KEY_ID
+              value: "FAKEKEY"
+            - name: AWS_SECRET_ACCESS_KEY
+              value: "FAKESECRET"
+            - name: AWS_EC2_METADATA_DISABLED
+              value: "true"
         clusterName: "microk8s"
         clusterEndpoint: "https://192.168.100.2:16443"
         logLevel: "debug"
