@@ -32,7 +32,11 @@ spec:
           create: true
         settings:
           featureGates:
-            Drift: false
+            nodeRepair: false
+            nodeOverlay: false
+            reservedCapacity: true
+            spotToSpotConsolidation: false
+            staticCapacity: false
   destination:
     server: "https://kubernetes.default.svc"
     namespace: data
