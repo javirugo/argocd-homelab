@@ -43,26 +43,26 @@ spec:
   syncPolicy:
     automated: {}
 
----
-apiVersion: karpenter.sh/v1alpha5
-kind: Provisioner
-metadata:
-  name: kwok
-  namespace: data
-spec:
-  requirements:
-    - key: "kubernetes.io/arch"
-      operator: In
-      values: ["amd64"]
-    - key: "kubernetes.io/os"
-      operator: In
-      values: ["linux"]
-  limits:
-    resources:
-      cpu: 1000
-      memory: 1000Gi
-  providerRef:
-    name: kwok-provider
+# ---
+# apiVersion: karpenter.sh/v1alpha5
+# kind: Provisioner
+# metadata:
+#   name: kwok
+#   namespace: data
+# spec:
+#   requirements:
+#     - key: "kubernetes.io/arch"
+#       operator: In
+#       values: ["amd64"]
+#     - key: "kubernetes.io/os"
+#       operator: In
+#       values: ["linux"]
+#   limits:
+#     resources:
+#       cpu: 1000
+#       memory: 1000Gi
+#   providerRef:
+#     name: kwok-provider
 
 # ---
 # apiVersion: karpenter.k8s.aws/v1alpha1
