@@ -57,12 +57,12 @@ spec:
   providerRef:
     name: kwok-provider
 
----
-apiVersion: karpenter.k8s.aws/v1alpha1
-kind: AWSNodeTemplate
-metadata:
-  name: kwok-provider
-  namespace: data
-spec:
-  subnetSelector: {}
-  securityGroupSelector: {}
+# ---
+# apiVersion: karpenter.k8s.aws/v1alpha1
+# kind: AWSNodeTemplate
+# metadata:
+#   name: kwok-provider
+#   namespace: data
+# spec:
+#   subnetSelector: {}
+#   securityGroupSelector: {}
