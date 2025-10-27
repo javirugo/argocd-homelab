@@ -13,6 +13,7 @@ spec:
       releaseName: karpenter-kwok
       values: |
         replicas: 1
+        topologySpreadConstraints: []
         controller:
           image:
             repository: docker.galluman.com/karpenter-kwok
