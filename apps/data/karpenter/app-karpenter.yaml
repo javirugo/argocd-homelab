@@ -13,6 +13,10 @@ spec:
       releaseName: karpenter
       values: |
         controller:
+          image:
+            repository: docker.galluman.com/karpenter-kwok
+            tag: latest
+            digest: ""
           env:
             - name: AWS_REGION
               value: "us-fake-1"
@@ -22,6 +26,8 @@ spec:
               value: "FAKESECRET"
             - name: AWS_EC2_METADATA_DISABLED
               value: "true"
+        imagePullSecrets:
+          - name: nexuspullsecret
         clusterName: "microk8s"
         clusterEndpoint: "https://192.168.100.2:16443"
         logLevel: "debug"
