@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: karpenter
+  namespace: argocd
+spec:
+  project: data
+  source:
+    chart: karpenter
+    repoURL: https://charts.karpenter.sh/
+    targetRevision: 0.16.3
+    helm:
+      releaseName: karpenter
+      values: |
+        clusterEndpoint: "https://192.168.100.2:16443"
+        clusterName: Homelab
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: data
+  syncPolicy:
+    automated: {}
