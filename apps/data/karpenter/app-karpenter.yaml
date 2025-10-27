@@ -12,8 +12,7 @@ spec:
     helm:
       releaseName: karpenter-kwok
       values: |
-        affinity:
-          podAntiAffinity: {}
+        replicas: 1
         controller:
           image:
             repository: docker.galluman.com/karpenter-kwok
