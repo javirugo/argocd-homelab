@@ -18,6 +18,7 @@ spec:
           image:
             repository: docker.galluman.com/karpenter-kwok
             tag: latest
+            digest: ""
         imagePullSecrets:
           - name: nexuspullsecret
         settings:
