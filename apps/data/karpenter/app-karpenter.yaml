@@ -13,10 +13,7 @@ spec:
       releaseName: karpenter
       values: |
         controller:
-          image:
-            repository: docker.galluman.com/karpenter-kwok
-            tag: latest
-            digest: ""
+          image: docker.galluman.com/karpenter-kwok:latest
           env:
             - name: AWS_REGION
               value: "us-fake-1"
