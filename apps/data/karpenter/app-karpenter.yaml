@@ -26,3 +26,32 @@ spec:
     namespace: data
   syncPolicy:
     automated: {}
+
+---
+apiVersion: karpenter.sh/v1
+kind: Provisioner
+metadata:
+  name: kwok
+spec:
+  requirements:
+    - key: "kubernetes.io/arch"
+      operator: In
+      values: ["amd64"]
+    - key: "kubernetes.io/os"
+      operator: In
+      values: ["linux"]
+  limits:
+    resources:
+      cpu: 1000
+      memory: 1000Gi
+  providerRef:
+    name: kwok-provider
+
+---
+apiVersion: karpenter.k8s.aws/v1alpha1
+kind: AWSNodeTemplate
+metadata:
+  name: kwok-provider
+spec:
+  subnetSelector: {}
+  securityGroupSelector: {}
