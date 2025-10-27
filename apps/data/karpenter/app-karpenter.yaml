@@ -13,7 +13,7 @@ spec:
       releaseName: karpenter
       values: |
         controller:
-          image: docker.galluman.com/karpenter-kwok:latest
+          image: public.ecr.aws/karpenter/controller:v1.0.4
           env:
             - name: AWS_REGION
               value: "us-fake-1"
