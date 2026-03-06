@@ -79,6 +79,8 @@ spec:
                 nginx.ingress.kubernetes.io/proxy-read-timeout: "1200"
                 nginx.ingress.kubernetes.io/proxy-send-timeout: "1200"
                 nginx.ingress.kubernetes.io/proxy-buffering: "off"
+                nginx.ingress.kubernetes.io/proxy_request_buffering: "off"
+                nginx.ingress.kubernetes.io/tcp_nodelay: "on"
             - host: dockerproxy.galluman.com
               port: 5001
               annotations:
@@ -87,6 +89,8 @@ spec:
                 nginx.ingress.kubernetes.io/proxy-read-timeout: "1200"
                 nginx.ingress.kubernetes.io/proxy-send-timeout: "1200"
                 nginx.ingress.kubernetes.io/proxy-buffering: "off"
+                nginx.ingress.kubernetes.io/proxy_request_buffering: "off"
+                nginx.ingress.kubernetes.io/tcp_nodelay: "on"
               secretName: nexus-ingress-tls
   destination:
     server: "https://kubernetes.default.svc"
