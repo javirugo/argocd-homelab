@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+  labels:
+    app: workflows-eventsource-git
+  name: workflows-eventsource-git
+  namespace: build-workflows
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: git-eventsource.galluman.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: gitea-push-webhook-homelab-eventsource-svc
+            port:
+              number: 12000
