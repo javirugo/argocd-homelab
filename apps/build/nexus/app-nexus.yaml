@@ -83,6 +83,11 @@ spec:
                 proxy-send-timeout: "1200"
             - host: dockerproxy.galluman.com
               port: 5001
+              annotations:
+                nginx.ingress.kubernetes.io/proxy-body-size: 10g
+                proxy-connect-timeout: "100"
+                proxy-read-timeout: "1200"
+                proxy-send-timeout: "1200"
               secretName: nexus-ingress-tls
   destination:
     server: "https://kubernetes.default.svc"
