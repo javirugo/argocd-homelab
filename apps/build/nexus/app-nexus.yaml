@@ -47,7 +47,10 @@ spec:
           annotations:
             nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
             cert-manager.io/cluster-issuer: lets-encrypt
-            nginx.ingress.kubernetes.io/proxy-body-size: 1g
+            nginx.ingress.kubernetes.io/proxy-body-size: 10g
+            proxy-connect-timeout: "100"
+            proxy-read-timeout: "1200"
+            proxy-send-timeout: "1200"
           tls:
             - secretName: nexus-ingress-tls
               hosts:
@@ -74,7 +77,10 @@ spec:
               port: 5000
               secretName: nexus-ingress-tls
               annotations:
-                nginx.ingress.kubernetes.io/proxy-body-size: 1g
+                nginx.ingress.kubernetes.io/proxy-body-size: 10g
+                proxy-connect-timeout: "100"
+                proxy-read-timeout: "1200"
+                proxy-send-timeout: "1200"
             - host: dockerproxy.galluman.com
               port: 5001
               secretName: nexus-ingress-tls
