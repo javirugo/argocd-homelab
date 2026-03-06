@@ -20,6 +20,9 @@ spec:
           replicaCount: 1
           clustered: false
           container:
+            image:
+              repository: sonatype/nexus3
+              nexusTag: 3.89.1
             resources:
               requests:
                 cpu: 4
