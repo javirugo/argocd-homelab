@@ -68,10 +68,11 @@ spec:
         nexus:
           docker:
             enabled: true
-            type: ClusterIP
+            type: NodePort
             registries:
             - host: docker.galluman.com
               port: 5000
+              nodePort: 30500
               secretName: nexus-ingress-tls
               annotations:
                 nginx.ingress.kubernetes.io/proxy-body-size: 10g
@@ -83,6 +84,7 @@ spec:
                 nginx.ingress.kubernetes.io/tcp_nodelay: "on"
             - host: dockerproxy.galluman.com
               port: 5001
+              nodePort: 30501
               annotations:
                 nginx.ingress.kubernetes.io/proxy-body-size: 10g
                 nginx.ingress.kubernetes.io/proxy-connect-timeout: "100"
