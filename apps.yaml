@@ -37,7 +37,8 @@ metadata:
 spec:
   description: ArgoCD Apps
   sourceRepos:
-  - '*'
+  - 'https://github.com/javirugo/argocd-homelab.git'
+  - 'https://github.com/javirugo/argocd-applications.git'
   destinations:
   - namespace: argocd
     server: https://kubernetes.default.svc
@@ -61,67 +62,31 @@ spec:
     - p, proj:argocd:argocd-role, applications, sync, cert-manager/*, allow
     - p, proj:argocd:argocd-role, applications, sync, default/*, allow
   clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
+  - group: 'gateway.networking.k8s.io'
+    kind: 'Gateway'
+  - group: 'external-secrets.io'
+    kind: 'ClusterSecretStore'
+  - group: 'cert-manager.io'
+    kind: 'ClusterIssuer'
 
 
 
 ---
-# ArgoCD K8S
+# ArgoCD K8S, projects and apps
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: 0-apps-k8s
+  name: 0-root
   namespace: argocd
 spec:
   project: argocd
   source:
     repoURL: https://github.com/javirugo/argocd-homelab.git
     targetRevision: main
-    path: k8s-objects
+    directory:
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
   syncPolicy:
     automated: {}
-
-
----
-# ArgoCD projects
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: 0-apps-argocd
-  namespace: argocd
-spec:
-  project: argocd
-  source:
-    repoURL: https://github.com/javirugo/argocd-homelab.git
-    targetRevision: main
-    path: projects
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: argocd
-  syncPolicy:
-    automated: {}
-
-
----
-# Application of all applications
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: 0-apps-all
-  namespace: argocd
-spec:
-  project: argocd
-  source:
-    repoURL: https://github.com/javirugo/argocd-homelab.git
-    targetRevision: main
-    path: apps
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: argocd
-  syncPolicy:
-    automated: {}
-

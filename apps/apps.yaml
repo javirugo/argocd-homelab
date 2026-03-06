@@ -1,0 +1,83 @@
+
+# Application of all applications
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 0-apps-build
+  namespace: argocd
+spec:
+  project: build
+  source:
+    repoURL: https://github.com/javirugo/argocd-homelab.git
+    targetRevision: main
+    path: apps/build
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated: {}
+
+---
+# Application of all applications
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 0-apps-data
+  namespace: argocd
+spec:
+  project: data
+  source:
+    repoURL: https://github.com/javirugo/argocd-homelab.git
+    targetRevision: main
+    path: apps/data
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: data
+  syncPolicy:
+    automated: {}
+
+---
+# Application of all applications
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 0-apps-dev
+  namespace: argocd
+spec:
+  project: dev
+  source:
+    repoURL: https://github.com/javirugo/argocd-applications.git
+    targetRevision: main
+    path: dev/
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated: {}
+
+---
+# Application of all applications
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 0-apps-prod
+  namespace: argocd
+spec:
+  project: prod
+  source:
+    repoURL: https://github.com/javirugo/argocd-applications.git
+    targetRevision: main
+    path: prod/
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
+  syncPolicy:
+    automated: {}
