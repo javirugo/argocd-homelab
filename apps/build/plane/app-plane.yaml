@@ -21,8 +21,6 @@ spec:
             nginx.ingress.kubernetes.io/proxy-body-size: 200m
             cert-manager.io/cluster-issuer: lets-encrypt
             nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-        ssl:
-
   destination:
     server: "https://kubernetes.default.svc"
     namespace: build
