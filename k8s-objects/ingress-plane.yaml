@@ -65,6 +65,13 @@ spec:
               number: 9000
         path: /uploads
         pathType: Prefix
+      - backend:
+          service:
+            name: gitbucket-plane-webhook-service
+            port:
+              number: 8080
+        path: /webhook
+        pathType: Prefix
   tls:
   - hosts:
     - plane.galluman.com

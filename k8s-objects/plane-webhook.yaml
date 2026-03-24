@@ -1,0 +1,89 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: gitbucket-plane-webhook-secret
+  namespace: build
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: vault
+    kind: ClusterSecretStore
+  target:
+    template:
+      type: Opaque
+      data:
+        PLANE_TOKEN: "{{ .API_TOKEN | toString }}"
+    name: gitbucket-plane-webhook-secret
+    creationPolicy: Owner
+  data:
+  - secretKey: API_TOKEN
+    remoteRef:
+      key: "homelab/data/plane"
+      property: API_TOKEN
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gitbucket-plane-webhook
+  namespace: build
+  labels:
+    app: gitbucket-plane-webhook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitbucket-plane-webhook
+  template:
+    metadata:
+      labels:
+        app: gitbucket-plane-webhook
+    spec:
+      imagePullSecrets:
+        - name: nexuspullsecret
+      containers:
+        - name: gitbucket-plane-webhook
+          image: docker.galluman.com/gitbucket-plane-hook:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PLANE_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: gitbucket-plane-webhook-secret
+                  key: PLANE_TOKEN
+            - name: PLANE_WORKSPACE
+              value: "unrealengine"
+            - name: PLANE_URL
+              value: "https://plane.galluman.com/api/v1"
+            - name: PORT
+              value: "8080"
+          resources:
+            limits:
+              cpu: "100m"
+              memory: "128Mi"
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+          livenessProbe:
+            httpGet:
+              path: /webhook
+              port: 8080
+              # Note: /webhook expects POST, but a GET 405 still confirms the process is alive
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gitbucket-plane-webhook-service
+  namespace: build
+spec:
+  selector:
+    app: gitbucket-plane-webhook
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
+
