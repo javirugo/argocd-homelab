@@ -14,13 +14,7 @@ spec:
       values: |
         planeVersion: v1.2.0
         ingress:
-          enabled: true
-          appHost: "plane.galluman.com"
-          ingressClass: "nginx"
-          ingress_annotations:
-            nginx.ingress.kubernetes.io/proxy-body-size: 200m
-            cert-manager.io/cluster-issuer: lets-encrypt
-            nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+          enabled: false
   destination:
     server: "https://kubernetes.default.svc"
     namespace: build
