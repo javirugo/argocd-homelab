@@ -65,13 +65,6 @@ spec:
             requests:
               cpu: "50m"
               memory: "64Mi"
-          livenessProbe:
-            httpGet:
-              path: /webhook
-              port: 8080
-              # Note: /webhook expects POST, but a GET 405 still confirms the process is alive
-            initialDelaySeconds: 5
-            periodSeconds: 10
 ---
 apiVersion: v1
 kind: Service
