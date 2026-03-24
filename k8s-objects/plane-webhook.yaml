@@ -43,7 +43,7 @@ spec:
         - name: nexuspullsecret
       containers:
         - name: gitbucket-plane-webhook
-          image: docker.galluman.com/gitbucket-plane-hook:latest
+          image: docker.galluman.com/gitbucket-plane-hook:1
           ports:
             - containerPort: 8080
           env:
