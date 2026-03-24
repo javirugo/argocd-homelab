@@ -9,7 +9,7 @@ metadata:
   labels:
     app: plane
   name: plane
-  namespace: plane
+  namespace: build
 spec:
   ingressClassName: nginx
   rules:
